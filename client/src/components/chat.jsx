@@ -2,18 +2,29 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import '../App.css';
 
-const Chat = () => {
+const Chat = (props) => {
+    const name = props.name;
+    const [socket] = useState(() => io(':8000'))
 
-    const [socket] = useState(() => io(':8000'));
+    const [ messages, setMessages ] = useState([]);
 
     useEffect(() => {
-        console.log("Is this running?");
-        socket.on("Welcome", (data) => console.log(data));
-        return () => socket.disconnect(true);
+        socket.on("new_message", msg =>
+            setMessages(prevMessages => {
+                return [msg, ...prevMessages];
+            })
+        );
     }, []);
 
     return (
-        <h1>Socket Test</h1>
+        <div>
+            <h2>Time to Chat</h2>
+            {messages.map((msg, i) => {
+                return (
+                    <p key={i}>{msg}</p>
+                )
+            })}
+        </div>
     );
 }
 
