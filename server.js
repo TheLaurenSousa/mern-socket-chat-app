@@ -9,5 +9,7 @@ const io = require('socket.io')(server, {cors: true});
 
 io.on("connection", socket => {
     console.log(socket.id);
-    socket.emit("new_message", "nice to meet you!");
+    socket.on("new_message", data => {
+        io.emit("send_message", data);
+    });
 });
