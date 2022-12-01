@@ -17,9 +17,9 @@ function App() {
       <h1>Socket Chat</h1>
       <div id='nameForm'>
           <h2>Get started right now!</h2>
-          <p>I want to start chatting with the name: </p>
-          <form onSubmit={onSubmitHandler}>
-              <input type="text" name='name' onChange={(e) => setName(e.target.value)} value={name}/>
+          <p>Enter a name to get started: </p>
+          <form onSubmit={onSubmitHandler} className='nameForm'>
+              <input type="text" name='name' autoComplete='off' onChange={(e) => setName(e.target.value)} value={name}/>
               <input type="submit" value="Start Chatting"/>
           </form>
       </div>

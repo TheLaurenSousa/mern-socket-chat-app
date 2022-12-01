@@ -25,20 +25,33 @@ const Chat = (props) => {
 
     return (
         <div>
-            <h2>Time to Chat</h2>
-            {messages.map((msg, i) => {
-                return (
-                    <div key={i} className="message">
-                        <p>{msg.name} said</p>
-                        <p>{msg.msg}</p>
+            <h2>Chat</h2>
+                <div className='chat'>
+                    <div className='chatLog'>
+                        {messages.map((msg, i) => {
+                            if (msg.name === name){
+                                return (
+                                    <div key={i} className="userMessage">
+                                        <p id='userName'>{msg.name} said:</p>
+                                        <p id='userMessage'>{msg.msg}</p>
+                                    </div>
+                                )
+                            } else {
+                                return (
+                                    <div key={i} className="otherMessage">
+                                        <p id='userName'>{msg.name} said:</p>
+                                        <p id='userMessage'>{msg.msg}</p>
+                                    </div>
+                                )
+                            }
+                        })}
                     </div>
-                )
-            })}
-            <form onSubmit={onSubmitHandler}>
-                {/* <input type="hidden" name = "name" value={name}/> */}
-                <input id="msg" autoComplete="off" type="textarea" value={message} onChange={(e) => setMessage(e.target.value)}/>
-                <button>Send</button>
-            </form>
+                <form onSubmit={onSubmitHandler} className='chatForm'>
+                    {/* <input type="hidden" name = "name" value={name}/> */}
+                    <input id="msg" autoComplete="off" type="textarea" value={message} onChange={(e) => setMessage(e.target.value)}/>
+                    <button>Send</button>
+                </form>
+            </div>
         </div>
     );
 }
