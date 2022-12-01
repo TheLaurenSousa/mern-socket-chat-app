@@ -9,13 +9,13 @@ function App() {
   const onSubmitHandler = e => {
     e.preventDefault();
     setChatStart(true);
-    document.getElementById("form").style.display="none";
+    document.getElementById("nameForm").style.display="none";
 }
 
   return (
     <div className="App">
       <h1>Socket Chat</h1>
-      <div id='form'>
+      <div id='nameForm'>
           <h2>Get started right now!</h2>
           <p>I want to start chatting with the name: </p>
           <form onSubmit={onSubmitHandler}>

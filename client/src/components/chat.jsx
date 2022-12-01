@@ -4,25 +4,23 @@ import '../App.css';
 
 const Chat = (props) => {
     const name = props.name;
-    const [socket] = useState(() => io(':8000'))
-    const [message, setMessage] = useState('');
-
+    const [ socket ] = useState(() => io(':8000'))
+    const [ message, setMessage ] = useState('');
     const [ messages, setMessages ] = useState([]);
 
     useEffect(() => {
-        socket.on("send_message", data => {
+        socket.on("new_message", data => {
             setMessages(prevMessages => {
-                return [data, ...prevMessages];
+                return [...prevMessages, data];
             })
         });
     }, []);
 
-    const onSubmitHandler = (formData) => {
-        const data = {
-            msg: formData.msg,
-            name: formData.name
-        };
-        socket.emit("new_message", data);
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        if (message && name) {
+            socket.emit("new_message", {msg: message, name: name});
+        }
     };
 
     return (
@@ -37,9 +35,9 @@ const Chat = (props) => {
                 )
             })}
             <form onSubmit={onSubmitHandler}>
-                <input type="hidden" value={name}/>
-                <input type="textarea" name="msg" value={message} onChange={(e) => setMessage(e.target.value)}/>
-                <button type='submit'>Send</button>
+                {/* <input type="hidden" name = "name" value={name}/> */}
+                <input id="msg" autoComplete="off" type="textarea" value={message} onChange={(e) => setMessage(e.target.value)}/>
+                <button>Send</button>
             </form>
         </div>
     );
